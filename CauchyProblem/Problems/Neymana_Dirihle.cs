@@ -5,9 +5,6 @@ namespace CauchyProblem.Problems
 {
 	public class Neymana_Dirihle
 	{
-		private decimal[] inputH { get; set; }
-		private decimal[] inputF1 { get; set; }
-		
 		private decimal[,] matrixA { get; set; }
 		private decimal[] vectorF { get; set; }
 		
@@ -15,11 +12,9 @@ namespace CauchyProblem.Problems
 		
 		public Neymana_Dirihle(decimal[] h, decimal[] f1)
 		{
-			inputH = h;
-			inputF1 = f1;
 			InitTVector();
 			InitMatrix();
-			InitF();
+			InitF(h,f1);
 		}
 
 		public decimal[] CalculateDestiny()
@@ -95,7 +90,7 @@ namespace CauchyProblem.Problems
 			});
 		}
 
-		public void InitF()
+		public void InitF(decimal[] h,decimal[] f1)
 		{
 			vectorF = new decimal[4*Parameters.M];
 
@@ -103,11 +98,11 @@ namespace CauchyProblem.Problems
 			{
 				if (i < 2 * Parameters.M)
 				{
-					vectorF[i] = inputH[i];
+					vectorF[i] = h[i];
 				}
 				else
 				{
-					vectorF[i] = inputF1[i-2*Parameters.M];
+					vectorF[i] = f1[i-2*Parameters.M];
 				}
 			}
 		}

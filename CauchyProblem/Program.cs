@@ -8,11 +8,11 @@ namespace CauchyProblem
 	{
 		public static void Main(string[] args)
 		{
-			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1());
+			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1_1());
 
 			var nablRes = problem.CalculateU(problem.CalculateDestiny());
 
-			Console.WriteLine(Norma(nablRes,GetF1()));
+			Console.WriteLine(Norma(nablRes,GetF1_0()));
 		}
 
 		private static decimal Norma(decimal[] vect1, decimal[] vect2)
@@ -51,13 +51,25 @@ namespace CauchyProblem
 			return res;
 		}
 
-		private static decimal[] GetF1()
+		private static decimal[] GetF1_1()
 		{
 			var res = new decimal[2 * Parameters.M];
 			for (int i = 0; i < res.Length; i++)
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
 				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)+Math.Pow((double)Parametrization_ND.X12(t),2));
+			}
+
+			return res;
+		}
+		
+		private static decimal[] GetF1_0()
+		{
+			var res = new decimal[2 * Parameters.M];
+			for (int i = 0; i < res.Length; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X01(t),2)+Math.Pow((double)Parametrization_ND.X02(t),2));
 			}
 
 			return res;

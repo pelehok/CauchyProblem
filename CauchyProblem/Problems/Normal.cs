@@ -24,9 +24,9 @@ namespace CauchyProblem.Problems
 		public static decimal R(decimal tj, decimal t)
 		{
 			decimal sum = 0;
-			for (int i = 1; i < Parameters.M ; i++)
+			for (int m = 1; m < Parameters.M ; m++)
 			{
-				sum+=(decimal)Math.Cos((double)((decimal)i*(t-tj)))/(decimal)i;
+				sum+=(decimal)Math.Cos((double)((decimal)m*(t-tj)))/(decimal)m;
 			}
 
 			return -1M / (2M * Parameters.M) *
