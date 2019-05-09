@@ -27,5 +27,17 @@ namespace CauchyProblem
 
 			return res;
 		}
+		
+		public static decimal Mult(decimal[] v1, decimal[] v2)
+		{
+			decimal res = 0;
+
+			for (int i = 0; i < v1.Length; i++)
+			{
+				res += v1[i] * v2[i];
+			}
+
+			return res;
+		}
 	}
 }

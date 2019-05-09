@@ -16,10 +16,23 @@ namespace CauchyProblem.Problems
 			return (decimal)Math.Sqrt(Math.Pow((double) Math.Abs(x1d(t)), 2) + Math.Pow((double) Math.Abs(x2d(t)), 2));
 		}
 		
-		public static decimal GetModulWithQuare(decimal t, Func<decimal, decimal> x1d,
-			Func<decimal, decimal> x2d)
+		public static decimal GetModul(decimal[] x)
 		{
-			return (decimal)(Math.Pow((double) Math.Abs(x1d(t)), 2) + Math.Pow((double) Math.Abs(x2d(t)), 2));
+			return (decimal)(Math.Pow((double)x[0], 2) + Math.Pow((double)x[1], 2));
+		}
+
+		public static decimal R(decimal tj, decimal t)
+		{
+			decimal sum = 0;
+			for (int i = 1; i < Parameters.M ; i++)
+			{
+				sum+=(decimal)Math.Cos((double)((decimal)i*(t-tj)))/(decimal)i;
+			}
+
+			return -1M / (2M * Parameters.M) *
+			       (1M + 
+			        2M * sum + 
+			        (decimal) Math.Cos((double) (Parameters.M * (t - tj))) / Parameters.M);
 		}
 	}
 }

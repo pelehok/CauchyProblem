@@ -17,22 +17,22 @@ namespace CauchyProblem.Problems.Parametrization
 			return new [] {X11(t),X12(t) };
 		}
 		
-		private static decimal X01(decimal t)//Г0
+		public static decimal X01(decimal t)//Г0
 		{
 			return R0*(decimal)Math.Cos((double)t);
 		}
 		
-		private static decimal X02(decimal t)//Г0
+		public static decimal X02(decimal t)//Г0
 		{
 			return R0*(decimal)Math.Sin((double)t);
 		}
 		
-		private static decimal X11(decimal t)//Г1
+		public static decimal X11(decimal t)//Г1
 		{
 			return R1*(decimal)Math.Cos((double)t);
 		}
 		
-		private static decimal X12(decimal t)//Г1
+		public static decimal X12(decimal t)//Г1
 		{
 			return R1*(decimal)Math.Sin((double)t);
 		}
@@ -56,6 +56,27 @@ namespace CauchyProblem.Problems.Parametrization
 		public static decimal X12d(decimal t)//Г1
 		{
 			return R1*(decimal)Math.Cos((double)t);
+		}
+		
+		//differect 2 
+		public static decimal X01d2(decimal t)//Г0
+		{
+			return -R0*(decimal)Math.Cos((double)t);
+		}
+		
+		public static decimal X02d2(decimal t)//Г0
+		{
+			return -R0*(decimal)Math.Sin((double)t);
+		}
+		
+		public static decimal X11d2(decimal t)//Г1
+		{
+			return -R1*(decimal)Math.Cos((double)t);
+		}
+		
+		public static decimal X12d2(decimal t)//Г1
+		{
+			return -R1*(decimal)Math.Sin((double)t);
 		}
 	}
 }

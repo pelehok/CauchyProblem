@@ -39,9 +39,11 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Cauchy_InputData.cs" />
-        <Compile Include="Problems\Heymana_Dirihle.cs" />
+        <Compile Include="GauseMethod.cs" />
+        <Compile Include="Problems\Neymana_Dirihle.cs" />
         <Compile Include="Problems\Kernels\Kernels_ND.cs" />
         <Compile Include="Problems\Normal.cs" />
+        <Compile Include="Problems\Parameters.cs" />
         <Compile Include="Problems\Parametrization\Parametrization_ND.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
