@@ -32,7 +32,7 @@ namespace CauchyProblem.Problems
 			return -1M / (2M * Parameters.M) *
 			       (1M + 
 			        2M * sum + 
-			        (decimal) Math.Cos((double) (Parameters.M * (t - tj))) / Parameters.M);
+			        (decimal) Math.Cos((double) (t - tj)) / (decimal)Parameters.M);
 		}
 	}
 }

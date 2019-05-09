@@ -1,18 +1,31 @@
 ﻿using System;
+using System.Windows.Forms;
 using CauchyProblem.Problems;
 using CauchyProblem.Problems.Parametrization;
+using Charts;
 
 namespace CauchyProblem
 {
 	internal class Program
 	{
-		public static void Main(string[] args)
+        [STAThread]
+        public static void Main(string[] args)
 		{
 			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1_1());
 
 			var nablRes = problem.CalculateU(problem.CalculateDestiny());
 
-			Console.WriteLine(Norma(nablRes,GetF1_0()));
+            
+            Form1 form = new Form1();
+            form.Draw(nablRes,problem.InitTVector());
+            form.Show();
+                
+            Application.EnableVisualStyles();
+            Application.Run(form);
+
+            Console.ReadLine();
+
+            Console.WriteLine(Norma(nablRes,GetF1_0()));
 		}
 
 		private static decimal Norma(decimal[] vect1, decimal[] vect2)

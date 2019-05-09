@@ -12,7 +12,7 @@ namespace CauchyProblem.Problems
 		
 		public Neymana_Dirihle(decimal[] h, decimal[] f1)
 		{
-			InitTVector();
+			t = InitTVector();
 			InitMatrix();
 			InitF(h,f1);
 		}
@@ -24,15 +24,17 @@ namespace CauchyProblem.Problems
 			return gause.FindSolution(matrixA, vectorF);
 		}
 
-		public void InitTVector()
+		public decimal[] InitTVector()
 		{
-			t = new decimal[2*Parameters.M];
+			var res = new decimal[2*Parameters.M];
 
-			for (int i = 0; i < t.Length; i++)
+			for (int i = 0; i < 2 * Parameters.M; i++)
 			{
-				t[i] = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				res[i] = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
 			}
-		}
+
+            return res;
+        }
 
 		public void InitMatrix()
 		{
