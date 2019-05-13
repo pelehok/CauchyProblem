@@ -109,25 +109,17 @@ namespace CauchyProblem.Problems
 			}
 		}
 
-		public decimal[] CalculateU(decimal[] dectiny)
+		public decimal CalculateU(decimal[] dectiny, decimal x1, decimal x2)
 		{
-			var res = new decimal[2*Parameters.M];
-			for (int j = 0; j < res.Length; j++)
+			decimal sum1 = 0;
+			decimal sum2 = 0;
+			for (int k = 0; k < 2 * Parameters.M; k++)
 			{
-				decimal sum1 = 0;
-				decimal sum2 = 0;
-				for (int k = 0; k < 2 * Parameters.M; k++)
-				{
-					sum1 += (dectiny[j] * Kernels_ND.P11(t[j], t[k]));
-					sum2 += (dectiny[j + 2 * Parameters.M] *
-					         -0.5M * Normal.R(t[k], t[j]) +
-					         Kernels_ND.P12_2(t[j], t[k]) / (2 * Parameters.M));
-				}
-
-				res[j] = (sum1 + sum2) / (2M * Parameters.M);
+				sum1 += dectiny[k] * Kernels_ND.Fundamental(x1, x2);
+				sum2 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x1, x2);
 			}
 
-			return res;
+			return (sum1 + sum2)/(2M*Parameters.M);
 		}
 	}
 }

@@ -17,12 +17,19 @@ namespace Charts
 			InitializeComponent();
 		}
 
-        public void Draw(decimal[] values,decimal[] x)
+        public void Draw1(decimal[] values,decimal[] x)
         {
             for (int i = 0; i < values.Length; i++)
             {
                 chart2.Series[0].Points.AddXY(x[i], values[i]);
             }
+        }
+        public void Draw2(decimal[] values,decimal[] x)
+        {
+	        for (int i = 0; i < values.Length; i++)
+	        {
+		        chart2.Series[1].Points.AddXY(x[i], values[i]);
+	        }
         }
 	}
 }

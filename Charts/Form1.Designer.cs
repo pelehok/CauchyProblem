@@ -35,6 +35,8 @@
 				new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 =
 				new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 =
+				new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			((System.ComponentModel.ISupportInitialize) (this.chart2)).BeginInit();
 			this.SuspendLayout();
@@ -48,7 +50,12 @@
 			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series1.Legend = "Legend1";
 			series1.Name = "Series2";
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.Legend = "Legend1";
+			series2.Name = "Series3";
 			this.chart2.Series.Add(series1);
+			this.chart2.Series.Add(series2);
 			this.chart2.Size = new System.Drawing.Size(1291, 576);
 			this.chart2.TabIndex = 1;
 			this.chart2.Text = "chart2";
@@ -64,6 +71,6 @@
 
 		#endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
 	}
 }

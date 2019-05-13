@@ -5,6 +5,11 @@ namespace CauchyProblem.Problems.Kernels
 {
 	public class Kernels_ND
 	{
+		public static decimal Fundamental(decimal x1, decimal x2)
+		{
+			return (decimal)Math.Log((double)(1M / Math.Abs(x1 - x2)));
+		}
+		
 		public static decimal K01(decimal t, decimal tay)
 		{
 			if (t != tay)

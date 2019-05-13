@@ -13,19 +13,20 @@ namespace CauchyProblem
 		{
 			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1_1());
 
-			var nablRes = problem.CalculateU(problem.CalculateDestiny());
-
+			var destiny = problem.CalculateDestiny();
+			
+			var nablRes = problem.CalculateU(destiny,5M,4.5M);
+			var exactRes = GetF(5M,4.5M);
             
-            Form1 form = new Form1();
-            form.Draw(nablRes,problem.InitTVector());
+            /*Form1 form = new Form1();
+            form.Draw1(nablRes,problem.InitTVector());
+            form.Draw2(GetF1_0(),problem.InitTVector());
             form.Show();
                 
             Application.EnableVisualStyles();
-            Application.Run(form);
+            Application.Run(form);*/
 
-            Console.ReadLine();
-
-            Console.WriteLine(Norma(nablRes,GetF1_0()));
+            Console.WriteLine(Math.Abs(nablRes-exactRes));
 		}
 
 		private static decimal Norma(decimal[] vect1, decimal[] vect2)
@@ -58,7 +59,7 @@ namespace CauchyProblem
 					Parametrization_ND.X02d(t)
 				});
 
-				res[i] = dod1-dod2;
+				res[i] = dod1 + dod2;
 			}
 
 			return res;
@@ -70,7 +71,7 @@ namespace CauchyProblem
 			for (int i = 0; i < res.Length; i++)
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
-				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)+Math.Pow((double)Parametrization_ND.X12(t),2));
+				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)-Math.Pow((double)Parametrization_ND.X12(t),2));
 			}
 
 			return res;
@@ -86,6 +87,11 @@ namespace CauchyProblem
 			}
 
 			return res;
+		}
+		
+		private static decimal GetF(decimal x1, decimal x2)
+		{
+			return x1 * x1 - x2 * x2;
 		}
 	}
 }
