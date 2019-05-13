@@ -18,7 +18,7 @@ namespace CauchyProblem.Problems
 		
 		public static decimal GetModul(decimal[] x)
 		{
-			return (decimal)(Math.Pow((double)x[0], 2) + Math.Pow((double)x[1], 2));
+			return (decimal)Math.Sqrt(Math.Pow((double)x[0], 2) + Math.Pow((double)x[1], 2));
 		}
 
 		public static decimal R(decimal tj, decimal t)

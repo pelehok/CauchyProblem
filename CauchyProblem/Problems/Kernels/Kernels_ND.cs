@@ -40,7 +40,7 @@ namespace CauchyProblem.Problems.Kernels
 						        Parametrization_ND.X01d(t),
 						        Parametrization_ND.X02d(t)
 					        })
-					        , 3));
+					        , 2));//TODO check in conspects
 			}
 		}
 

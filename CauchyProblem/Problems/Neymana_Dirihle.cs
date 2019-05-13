@@ -96,7 +96,7 @@ namespace CauchyProblem.Problems
 		{
 			vectorF = new decimal[4*Parameters.M];
 
-			for (int i = 0; i < t.Length; i++)
+			for (int i = 0; i < vectorF.Length; i++)
 			{
 				if (i < 2 * Parameters.M)
 				{

@@ -14,19 +14,26 @@ namespace CauchyProblem
 			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1_1());
 
 			var destiny = problem.CalculateDestiny();
-			
-			var nablRes = problem.CalculateU(destiny,5M,4.5M);
-			var exactRes = GetF(5M,4.5M);
-            
-            /*Form1 form = new Form1();
-            form.Draw1(nablRes,problem.InitTVector());
-            form.Draw2(GetF1_0(),problem.InitTVector());
+			var resNabl = new decimal[2 * Parameters.M];
+			var resExact = new decimal[2 * Parameters.M];
+			for (int i = 0; i < resNabl.Length; i++)
+			{
+				var t = i * (decimal) Math.PI / Parameters.M;
+				var points = GetPoint(t);
+				resNabl[i] = problem.CalculateU(destiny, points[0], points[1]);
+				resExact[i] = GetF(points[0], points[1]);
+			}
+
+            Form1 form = new Form1();
+            //form.Draw1(destiny,problem.InitTVector());
+            form.Draw1(resNabl,problem.InitTVector());
+            form.Draw2(resExact,problem.InitTVector());
             form.Show();
                 
             Application.EnableVisualStyles();
-            Application.Run(form);*/
+            Application.Run(form);
 
-            Console.WriteLine(Math.Abs(nablRes-exactRes));
+            //Console.WriteLine(Math.Abs(nablRes-exactRes));
 		}
 
 		private static decimal Norma(decimal[] vect1, decimal[] vect2)
@@ -83,7 +90,7 @@ namespace CauchyProblem
 			for (int i = 0; i < res.Length; i++)
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
-				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X01(t),2)+Math.Pow((double)Parametrization_ND.X02(t),2));
+				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X01(t),2)-Math.Pow((double)Parametrization_ND.X02(t),2));
 			}
 
 			return res;
@@ -92,6 +99,30 @@ namespace CauchyProblem
 		private static decimal GetF(decimal x1, decimal x2)
 		{
 			return x1 * x1 - x2 * x2;
+		}
+		
+		private static decimal[] GetF()
+		{
+			var res = new decimal[2 * Parameters.M];
+			for (int i = 0; i < res.Length; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				
+				res[i] = (decimal)(Math.Pow(3.0*Math.Cos((double)t),2)-Math.Pow(3.0*Math.Sin((double)t),2));
+			}
+
+			return res;
+		}
+		
+		private static decimal[] GetPoint(decimal t)
+		{
+			var x1 = (decimal) (3.0 * Math.Cos((double) t));
+			var x2 = (decimal) (3.0 * Math.Sin((double) t));
+			if (x1 != x2)
+			{
+				return new[] {x1, x2};
+			}
+			return new[] {x1, x2+0.001M};
 		}
 	}
 }
