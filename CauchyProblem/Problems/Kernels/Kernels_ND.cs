@@ -33,17 +33,18 @@ namespace CauchyProblem.Problems.Kernels
 			}
 			else
 			{
-				return Parametrization_ND.X02d(t) *
-				       Parametrization_ND.X01d2(t) -
-				       Parametrization_ND.X01d(t) *
-				       Parametrization_ND.X02d2(t) /
-				       (2M * (decimal)Math.Pow(
+				return VectorHelper.Mult(
+					       new []{Parametrization_ND.X01d2(t),Parametrization_ND.X02d2(t)},
+					       Normal.GetNormal(t,
+						       Parametrization_ND.X01d,
+						       Parametrization_ND.X02d))
+				       / (2M * (decimal)Math.Pow(
 					        (double)Normal.GetModul(new []
 					        {
 						        Parametrization_ND.X01d(t),
 						        Parametrization_ND.X02d(t)
 					        })
-					        , 2));//TODO check in conspects
+					        , 2));
 			}
 		}
 
@@ -94,11 +95,15 @@ namespace CauchyProblem.Problems.Kernels
 		{
 			if (t != tay)
 			{
-				return (decimal) Math.Log(1 /
-				                          (double) Math.Pow((double)Normal.GetModul(
+				return (decimal) Math.Log(4 / Math.E *
+				                          Math.Pow(
+					                          Math.Sin(
+						                          (double) (t - tay) / 2
+					                          ), 2)
+				                          /Math.Pow((double)Normal.GetModul(
 					                          VectorHelper.Div(
 						                          Parametrization_ND.X1(t),
-						                          Parametrization_ND.X1(tay))),2))-P12_1(t,tay);
+						                          Parametrization_ND.X1(tay))),2))/2;
 			}
 			else
 			{
@@ -109,7 +114,7 @@ namespace CauchyProblem.Problems.Kernels
 						                           Parametrization_ND.X11d(t),
 						                           Parametrization_ND.X12d(t)
 					                           })
-					                           , 2)));
+					                           , 2)))/2;
 			}
 		}
 	}
