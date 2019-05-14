@@ -11,7 +11,8 @@ namespace CauchyProblem
         [STAThread]
         public static void Main(string[] args)
 		{
-			Neymana_Dirihle problem = new Neymana_Dirihle(GetH(), GetF1_1());
+			Dirihle_Neymana problem = new Dirihle_Neymana(GetF1_0(),GetH_1());
+			//Neymana_Dirihle problem = new Neymana_Dirihle(GetH_0(),GetF1_1());
 
 			var destiny = problem.CalculateDestiny();
 			var resNabl = new decimal[2 * Parameters.M];
@@ -36,19 +37,7 @@ namespace CauchyProblem
             //Console.WriteLine(Math.Abs(nablRes-exactRes));
 		}
 
-		private static decimal Norma(decimal[] vect1, decimal[] vect2)
-		{
-			decimal sum = 0;
-
-			for (int i = 0; i < vect1.Length; i++)
-			{
-				sum += Math.Abs(vect1[i] - vect2[i]);
-			}
-
-			return sum;
-		}
-
-		private static decimal[] GetH()
+		private static decimal[] GetH_0()
 		{
 			var res = new decimal[2 * Parameters.M];
 			for (int i = 0; i < res.Length; i++)
@@ -64,6 +53,30 @@ namespace CauchyProblem
 				{
 					Parametrization_ND.X01d(t),
 					Parametrization_ND.X02d(t)
+				});
+
+				res[i] = dod1 + dod2;
+			}
+
+			return res;
+		}
+		
+		private static decimal[] GetH_1()
+		{
+			var res = new decimal[2 * Parameters.M];
+			for (int i = 0; i < res.Length; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				var dod1 = 2M * Parametrization_ND.X11(t) * Parametrization_ND.X12d(t) / Normal.GetModul(new[]
+				{
+					Parametrization_ND.X11d(t),
+					Parametrization_ND.X12d(t)
+				});
+				
+				var dod2 = 2M * Parametrization_ND.X12(t) * Parametrization_ND.X11d(t) / Normal.GetModul(new[]
+				{
+					Parametrization_ND.X11d(t),
+					Parametrization_ND.X12d(t)
 				});
 
 				res[i] = dod1 + dod2;
