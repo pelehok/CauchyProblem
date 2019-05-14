@@ -1,5 +1,6 @@
 using System;
 using CauchyProblem.Problems.Kernels;
+using CauchyProblem.Problems.Parametrization;
 
 namespace CauchyProblem.Problems
 {
@@ -87,8 +88,8 @@ namespace CauchyProblem.Problems
 		{
 			return 2M * Normal.GetModul(new[]
 			{
-				Parametrization.Parametrization_ND.X01d(t[j]),
-				Parametrization.Parametrization_ND.X02d(t[j])
+				Parametrization_ND.X01d(t[j]),
+				Parametrization_ND.X02d(t[j])
 			});
 		}
 
@@ -109,14 +110,14 @@ namespace CauchyProblem.Problems
 			}
 		}
 
-		public decimal CalculateU(decimal[] dectiny, decimal x1, decimal x2)
+		public decimal CalculateU(decimal[] dectiny, decimal[] x)
 		{
 			decimal sum1 = 0;
 			decimal sum2 = 0;
 			for (int k = 0; k < 2 * Parameters.M; k++)
 			{
-				sum1 += dectiny[k] * Kernels_ND.Fundamental(x1, x2);
-				sum2 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x1, x2);
+				sum1 += dectiny[k] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X01(t[k]),Parametrization_ND.X02(t[k])});
+				sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X11(t[k]),Parametrization_ND.X12(t[k])});
 			}
 
 			return (sum1 + sum2)/(2M*Parameters.M);

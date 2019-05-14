@@ -20,7 +20,7 @@ namespace CauchyProblem
 			{
 				var t = i * (decimal) Math.PI / Parameters.M;
 				var points = GetPoint(t);
-				resNabl[i] = problem.CalculateU(destiny, points[0], points[1]);
+				resNabl[i] = problem.CalculateU(destiny,new []{points[0], points[1]});
 				resExact[i] = GetF(points[0], points[1]);
 			}
 
