@@ -4,8 +4,8 @@ namespace CauchyProblem.Problems.Parametrization
 {
 	public class Parametrization_ND
 	{
-		private static decimal R1 = 4;// TODO jump in graph depents on this value
-		private static decimal R0 = 2;
+		private static decimal R1 = 1M;// TODO jump in graph depents on this value
+		private static decimal R0 = 0.5M;
 
 		public static decimal[] X0(decimal t)
 		{

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alter.cs" />
     <Compile Include="Cauchy_InputData.cs" />
     <Compile Include="GauseMethod.cs" />
     <Compile Include="Problems\Dirihle_Neymana.cs" />

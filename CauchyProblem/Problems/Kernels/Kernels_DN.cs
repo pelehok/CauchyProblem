@@ -93,5 +93,56 @@ namespace CauchyProblem.Problems.Kernels
 					          , 2));
 			}
 		}
+		
+		public static decimal A1(decimal t, decimal tay)
+		{
+			if (t != tay)
+			{
+				return VectorHelper.Mult(
+					       VectorHelper.Div(
+						       Parametrization_ND.X0(tay),
+						       Parametrization_ND.X0(t)),
+					       Normal.GetNormal(t,
+						       Parametrization_ND.X01d,
+						       Parametrization_ND.X02d))
+				       / (decimal) Math.Pow(
+					       (double) Normal.GetModul(
+						       VectorHelper.Div(
+							       Parametrization_ND.X0(t),
+							       Parametrization_ND.X0(tay)))
+					       , 2);
+			}
+			else
+			{
+				return VectorHelper.Mult(
+					       new[] {Parametrization_ND.X01d2(t), Parametrization_ND.X02d2(t)},
+					       Normal.GetNormal(t,
+						       Parametrization_ND.X01d,
+						       Parametrization_ND.X02d))
+				       / (2M * (decimal) Math.Pow(
+					          (double) Normal.GetModul(new[]
+					          {
+						          Parametrization_ND.X01d(t),
+						          Parametrization_ND.X02d(t)
+					          })
+					          , 2));
+			}
+		}
+		public static decimal A2(decimal t, decimal tay)
+		{
+			return VectorHelper.Mult(
+				       VectorHelper.Div(
+					       Parametrization_ND.X1(tay),
+					       Parametrization_ND.X0(t)),
+				       Normal.GetNormal(t,
+					       Parametrization_ND.X01d,
+					       Parametrization_ND.X02d))
+			       / (decimal) Math.Pow(
+				       (double) Normal.GetModul(
+					       VectorHelper.Div(
+						       Parametrization_ND.X0(t),
+						       Parametrization_ND.X1(tay)))
+				       , 2);
+		}
 	}
 }

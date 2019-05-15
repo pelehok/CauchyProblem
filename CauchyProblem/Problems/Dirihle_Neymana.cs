@@ -8,14 +8,14 @@ namespace CauchyProblem.Problems
 	{
 		private decimal[,] matrixA { get; set; }
 		private decimal[] vectorF { get; set; }
-		
+
 		private decimal[] t { get; set; }
-		
+
 		public Dirihle_Neymana(decimal[] h, decimal[] f1)
 		{
 			t = InitTVector();
 			InitMatrix();
-			InitF(h,f1);
+			InitF(h, f1);
 		}
 
 		public decimal[] CalculateDestiny()
@@ -27,19 +27,19 @@ namespace CauchyProblem.Problems
 
 		public decimal[] InitTVector()
 		{
-			var res = new decimal[2*Parameters.M];
+			var res = new decimal[2 * Parameters.M];
 
 			for (int i = 0; i < 2 * Parameters.M; i++)
 			{
-				res[i] = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				res[i] = (decimal) ((decimal) i * (decimal) Math.PI) / (decimal) Parameters.M;
 			}
 
-            return res;
-        }
+			return res;
+		}
 
 		public void InitMatrix()
 		{
-			matrixA = new decimal[4*Parameters.M,4*Parameters.M];
+			matrixA = new decimal[4 * Parameters.M, 4 * Parameters.M];
 
 			for (int i = 0; i < 4 * Parameters.M; i++)
 			{
@@ -70,7 +70,7 @@ namespace CauchyProblem.Problems
 							if (i == j)
 							{
 								matrixA[i, j] = Kernels_DN.K21(t[i - 2 * Parameters.M], t[j - 2 * Parameters.M]) /
-								                (2 * Parameters.M ) + GetDod1(j - 2 * Parameters.M);
+								                (2 * Parameters.M) + GetDod1(j - 2 * Parameters.M);
 							}
 							else
 							{
@@ -85,16 +85,16 @@ namespace CauchyProblem.Problems
 
 		private decimal GetDod1(int j)
 		{
-			return  1 / (2M * Normal.GetModul(new[]
+			return 1 / (2M * Normal.GetModul(new[]
 			{
 				Parametrization_ND.X11d(t[j]),
 				Parametrization_ND.X12d(t[j])
 			}));
 		}
 
-		public void InitF(decimal[] h,decimal[] f1)
+		public void InitF(decimal[] h, decimal[] f1)
 		{
-			vectorF = new decimal[4*Parameters.M];
+			vectorF = new decimal[4 * Parameters.M];
 
 			for (int i = 0; i < vectorF.Length; i++)
 			{
@@ -104,7 +104,7 @@ namespace CauchyProblem.Problems
 				}
 				else
 				{
-					vectorF[i] = f1[i-2*Parameters.M];
+					vectorF[i] = f1[i - 2 * Parameters.M];
 				}
 			}
 		}
@@ -115,11 +115,37 @@ namespace CauchyProblem.Problems
 			decimal sum2 = 0;
 			for (int k = 0; k < 2 * Parameters.M; k++)
 			{
-				sum1 += dectiny[k] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X01(t[k]),Parametrization_ND.X02(t[k])});
-				sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X11(t[k]),Parametrization_ND.X12(t[k])});
+				sum1 += dectiny[k] * Kernels_ND.Fundamental(x,
+					        new[] {Parametrization_ND.X01(t[k]), Parametrization_ND.X02(t[k])});
+				sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x,
+					        new[] {Parametrization_ND.X11(t[k]), Parametrization_ND.X12(t[k])});
 			}
 
-			return (sum1 + sum2)/(2M*Parameters.M);
+			return (sum1 + sum2) / (2M * Parameters.M);
+		}
+
+		public decimal[] CalculatePochidnaG0(decimal[] dectiny)
+		{
+			decimal sum1 = 0;
+			decimal sum2 = 0;
+
+			var res = new decimal[2 * Parameters.M];
+			for (int j = 0; j < 2 * Parameters.M; j++)
+			{
+				sum1 = 0;
+				sum2 = 0;
+				
+				var dod1 = -dectiny[j] / (2M * Normal.GetModul(t[j], Parametrization_ND.X01d, Parametrization_ND.X02d));
+				for (int k = 0; k < 2 * Parameters.M; k++)
+				{
+					sum1 += dectiny[k] * Kernels_DN.A1(t[j], t[k]);
+					sum1 += dectiny[k + 2 * Parameters.M] * Kernels_DN.A2(t[j], t[k]);
+				}
+
+				res[j] = dod1 + (sum1 + sum2) / (2M * Parameters.M);
+			}
+
+			return res;
 		}
 	}
 }

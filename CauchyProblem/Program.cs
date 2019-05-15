@@ -11,24 +11,14 @@ namespace CauchyProblem
         [STAThread]
         public static void Main(string[] args)
 		{
-			Dirihle_Neymana problem = new Dirihle_Neymana(GetF1_0(),GetH_1());
-			//Neymana_Dirihle problem = new Neymana_Dirihle(GetH_0(),GetF1_1());
+			Alter alt = new Alter();
 
-			var destiny = problem.CalculateDestiny();
-			var resNabl = new decimal[2 * Parameters.M];
-			var resExact = new decimal[2 * Parameters.M];
-			for (int i = 0; i < resNabl.Length; i++)
-			{
-				var t = i * (decimal) Math.PI / Parameters.M;
-				var points = GetPoint(t);
-				resNabl[i] = problem.CalculateU(destiny,new []{points[0], points[1]});
-				resExact[i] = GetF(points[0], points[1]);
-			}
-
+			var t = alt.Procces();
+			
             Form1 form = new Form1();
             //form.Draw1(destiny,problem.InitTVector());
-            form.Draw1(resNabl,problem.InitTVector());
-            form.Draw2(resExact,problem.InitTVector());
+            form.Draw1(t.Item1,GetRozbitta());
+            form.Draw2(GetF1_0(),GetRozbitta());
             form.Show();
                 
             Application.EnableVisualStyles();
@@ -85,13 +75,13 @@ namespace CauchyProblem
 			return res;
 		}
 
-		private static decimal[] GetF1_1()
+		private static decimal[] GetRozbitta()
 		{
 			var res = new decimal[2 * Parameters.M];
 			for (int i = 0; i < res.Length; i++)
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
-				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)-Math.Pow((double)Parametrization_ND.X12(t),2));
+				res[i] = t;
 			}
 
 			return res;

@@ -122,5 +122,29 @@ namespace CauchyProblem.Problems
 
 			return (sum1 + sum2)/(2M*Parameters.M);
 		}
+		
+		public decimal[] CalculateUG0(decimal[] dectiny)
+		{
+			decimal sum1 = 0;
+			decimal sum2 = 0;
+
+			var res = new decimal[2 * Parameters.M];
+			for (int j = 0; j < 2 * Parameters.M; j++)
+			{
+				sum1 = 0;
+				sum2 = 0;
+				
+				for (int k = 0; k < 2 * Parameters.M; k++)
+				{
+					sum1 += dectiny[k] * (
+					        (Kernels_ND.A1(t[j], t[k]) / (2M * Parameters.M) - Normal.R(t[k], t[j]) / (2M)));
+					sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.A2(t[j], t[k]);
+				}
+
+				res[j] = (sum1 + sum2 / (2M * Parameters.M));
+			}
+
+			return res;
+		}
 	}
 }
