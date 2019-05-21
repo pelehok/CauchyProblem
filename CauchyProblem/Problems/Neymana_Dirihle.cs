@@ -11,18 +11,20 @@ namespace CauchyProblem.Problems
 		
 		private decimal[] t { get; set; }
 		
+		private decimal[] destiny { get; set; }
+		
 		public Neymana_Dirihle(decimal[] h, decimal[] f1)
 		{
 			t = InitTVector();
 			InitMatrix();
 			InitF(h,f1);
+			CalculateDestiny();
 		}
 
-		public decimal[] CalculateDestiny()
+		private void CalculateDestiny()
 		{
 			GauseMethod gause = new GauseMethod();
-
-			return gause.FindSolution(matrixA, vectorF);
+			destiny = gause.FindSolution(matrixA, vectorF);
 		}
 
 		public decimal[] InitTVector()
@@ -52,7 +54,7 @@ namespace CauchyProblem.Problems
 							if (i == j)
 							{
 								matrixA[i, j] = Kernels_ND.K01(t[i], t[j]) /
-								                (2 * Parameters.M * GetDod1(j));
+								                (2 * Parameters.M) + GetDod1(j);
 							}
 							else
 							{
@@ -86,7 +88,7 @@ namespace CauchyProblem.Problems
 
 		private decimal GetDod1(int j)
 		{
-			return 2M * Normal.GetModul(new[]
+			return 1M / 2M * Normal.GetModul(new[]
 			{
 				Parametrization_ND.X01d(t[j]),
 				Parametrization_ND.X02d(t[j])
@@ -110,35 +112,32 @@ namespace CauchyProblem.Problems
 			}
 		}
 
-		public decimal CalculateU(decimal[] dectiny, decimal[] x)
+		public decimal CalculateU(decimal[] x)
 		{
 			decimal sum1 = 0;
 			decimal sum2 = 0;
 			for (int k = 0; k < 2 * Parameters.M; k++)
 			{
-				sum1 += dectiny[k] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X01(t[k]),Parametrization_ND.X02(t[k])});
-				sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X11(t[k]),Parametrization_ND.X12(t[k])});
+				sum1 += destiny[k] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X01(t[k]),Parametrization_ND.X02(t[k])});
+				sum2 += destiny[k + 2 * Parameters.M] * Kernels_ND.Fundamental(x, new []{Parametrization_ND.X11(t[k]),Parametrization_ND.X12(t[k])});
 			}
 
 			return (sum1 + sum2)/(2M*Parameters.M);
 		}
 		
-		public decimal[] CalculateUG0(decimal[] dectiny)
+		public decimal[] CalculateUG0()
 		{
-			decimal sum1 = 0;
-			decimal sum2 = 0;
-
 			var res = new decimal[2 * Parameters.M];
 			for (int j = 0; j < 2 * Parameters.M; j++)
 			{
-				sum1 = 0;
-				sum2 = 0;
+				decimal sum1 = 0;
+				decimal sum2 = 0;
 				
 				for (int k = 0; k < 2 * Parameters.M; k++)
 				{
-					sum1 += dectiny[k] * (
+					sum1 += destiny[k] * (
 					        (Kernels_ND.A1(t[j], t[k]) / (2M * Parameters.M) - Normal.R(t[k], t[j]) / (2M)));
-					sum1 += dectiny[k + 2 * Parameters.M] * Kernels_ND.A2(t[j], t[k]);
+					sum2 += destiny[k + 2 * Parameters.M] * Kernels_ND.A2(t[j], t[k]);
 				}
 
 				res[j] = (sum1 + sum2 / (2M * Parameters.M));

@@ -40,11 +40,16 @@
 			this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			((System.ComponentModel.ISupportInitialize) (this.chart2)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// chart2
+			// 
 			chartArea1.Name = "ChartArea1";
 			this.chart2.ChartAreas.Add(chartArea1);
+			this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
 			legend1.Name = "Legend1";
 			this.chart2.Legends.Add(legend1);
-			this.chart2.Location = new System.Drawing.Point(12, 12);
+			this.chart2.Location = new System.Drawing.Point(0, 0);
+			this.chart2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.chart2.Name = "chart2";
 			series1.ChartArea = "ChartArea1";
 			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -56,13 +61,17 @@
 			series2.Name = "Series3";
 			this.chart2.Series.Add(series1);
 			this.chart2.Series.Add(series2);
-			this.chart2.Size = new System.Drawing.Size(1291, 576);
+			this.chart2.Size = new System.Drawing.Size(1315, 750);
 			this.chart2.TabIndex = 1;
 			this.chart2.Text = "chart2";
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			// 
+			// Form1
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1315, 600);
+			this.ClientSize = new System.Drawing.Size(1315, 750);
 			this.Controls.Add(this.chart2);
+			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			((System.ComponentModel.ISupportInitialize) (this.chart2)).EndInit();

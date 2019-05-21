@@ -19,20 +19,17 @@ namespace CauchyProblem
 			var U_ND = new decimal[2*Parameters.M];
 			var pochidna_DN = new decimal[2*Parameters.M];
 			
-			while (k!=1)
+			while (k!=2)
 			{
 				ND = new Neymana_Dirihle(res1,res2);
-				var dentisyND = ND.CalculateDestiny();
-
-				res1 = ND.CalculateUG0(dentisyND);
-				U_ND = ND.CalculateUG0(dentisyND);
+				res1 = ND.CalculateUG0();
+				U_ND = ND.CalculateUG0();
 				res2 = GetG_pochidnaG1();
 				
 				DN = new Dirihle_Neymana(res1,res2);
-				var dentisyDN = DN.CalculateDestiny();
 
-				res1 = DN.CalculatePochidnaG0(dentisyDN);
-				pochidna_DN = DN.CalculatePochidnaG0(dentisyDN);
+				res1 = DN.CalculatePochidnaG0();
+				pochidna_DN = DN.CalculatePochidnaG0();
 				res2 = GetF1_G1();
 				k++;
 			}
@@ -47,18 +44,6 @@ namespace CauchyProblem
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
 				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)-Math.Pow((double)Parametrization_ND.X12(t),2));
-			}
-
-			return res;
-		}
-		
-		private decimal[] GetF1_G0()
-		{
-			var res = new decimal[2 * Parameters.M];
-			for (int i = 0; i < res.Length; i++)
-			{
-				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
-				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X01(t),2)-Math.Pow((double)Parametrization_ND.X02(t),2));
 			}
 
 			return res;
