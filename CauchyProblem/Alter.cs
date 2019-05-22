@@ -9,12 +9,14 @@ namespace CauchyProblem
 		private Dirihle_Neymana DN = null;
 		private Neymana_Dirihle ND = null;
 		
-		public (decimal[],decimal[]) Procces()
+		private static decimal Noisy = 0.05M;
+		
+		public (decimal[],decimal[]) Procces(bool useNoisy)
 		{
 			int k = 0;
 
 			var res1 = GetH();
-			var res2 = GetF1_G1();
+			var res2 = GetF1_G1(useNoisy);
 			
 			var U_ND = new decimal[2*Parameters.M];
 			var pochidna_DN = new decimal[2*Parameters.M];
@@ -22,6 +24,7 @@ namespace CauchyProblem
 			while (k!=2)
 			{
 				ND = new Neymana_Dirihle(res1,res2);
+				
 				res1 = ND.CalculateUG0();
 				U_ND = ND.CalculateUG0();
 				res2 = GetG_pochidnaG1();
@@ -30,22 +33,37 @@ namespace CauchyProblem
 
 				res1 = DN.CalculatePochidnaG0();
 				pochidna_DN = DN.CalculatePochidnaG0();
-				res2 = GetF1_G1();
+				res2 = GetF1_G1(useNoisy);
 				k++;
 			}
 			
 			return (U_ND,pochidna_DN);
 		}
 		
-		private decimal[] GetF1_G1()
+		private decimal[] GetF1_G1(bool useNoisy)
 		{
 			var res = new decimal[2 * Parameters.M];
+			
+			Random r = new Random();
+			decimal randomValue = (decimal)r.Next(0, 100) / 100M;
+			
+			var norma = 0.0M;
+			
 			for (int i = 0; i < res.Length; i++)
 			{
 				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
 				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X11(t),2)-Math.Pow((double)Parametrization_ND.X12(t),2));
+				norma += (res[i] * res[i]);
 			}
 
+			if (useNoisy)
+			{
+				for (int i = 0; i < res.Length; i++)
+				{
+					res[i] = res[i] + Noisy*(2M*randomValue - 1M) * (decimal)Math.Sqrt((double)norma);
+				}
+			}
+			
 			return res;
 		}
 		

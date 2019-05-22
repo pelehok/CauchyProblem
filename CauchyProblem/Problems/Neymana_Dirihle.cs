@@ -27,7 +27,7 @@ namespace CauchyProblem.Problems
 			destiny = gause.FindSolution(matrixA, vectorF);
 		}
 
-		public decimal[] InitTVector()
+		private decimal[] InitTVector()
 		{
 			var res = new decimal[2*Parameters.M];
 
@@ -39,7 +39,7 @@ namespace CauchyProblem.Problems
             return res;
         }
 
-		public void InitMatrix()
+		private void InitMatrix()
 		{
 			matrixA = new decimal[4*Parameters.M,4*Parameters.M];
 
@@ -95,7 +95,7 @@ namespace CauchyProblem.Problems
 			});
 		}
 
-		public void InitF(decimal[] h,decimal[] f1)
+		private void InitF(decimal[] h,decimal[] f1)
 		{
 			vectorF = new decimal[4*Parameters.M];
 

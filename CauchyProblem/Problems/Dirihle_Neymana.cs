@@ -27,7 +27,7 @@ namespace CauchyProblem.Problems
 			destiny = gause.FindSolution(matrixA, vectorF);
 		}
 
-		public decimal[] InitTVector()
+		private static decimal[] InitTVector()
 		{
 			var res = new decimal[2 * Parameters.M];
 
@@ -39,7 +39,7 @@ namespace CauchyProblem.Problems
 			return res;
 		}
 
-		public void InitMatrix()
+		private void InitMatrix()
 		{
 			matrixA = new decimal[4 * Parameters.M, 4 * Parameters.M];
 
@@ -94,7 +94,7 @@ namespace CauchyProblem.Problems
 			}));
 		}
 
-		public void InitF(decimal[] h, decimal[] f1)
+		private void InitF(decimal[] h, decimal[] f1)
 		{
 			vectorF = new decimal[4 * Parameters.M];
 
@@ -125,6 +125,27 @@ namespace CauchyProblem.Problems
 
 			return (sum1 + sum2) / (2M * Parameters.M);
 		}
+		
+		public decimal[] CalculateUG1()
+		{
+			var res = new decimal[2 * Parameters.M];
+			for (int j = 0; j < 2 * Parameters.M; j++)
+			{
+				decimal sum1 = 0;
+				decimal sum2 = 0;
+				
+				for (int k = 0; k < 2 * Parameters.M; k++)
+				{
+					sum1 += destiny[k] * (
+						        (Kernels_DN.A1_2(t[j], t[k]) / (2M * Parameters.M) - Normal.R(t[k], t[j]) / (2M)));
+					sum2 += destiny[k + 2 * Parameters.M] * Kernels_DN.A2_2(t[j], t[k]);
+				}
+
+				res[j] = (sum1 + sum2 / (2M * Parameters.M));
+			}
+
+			return res;
+		}
 
 		public decimal[] CalculatePochidnaG0()
 		{
@@ -135,10 +156,10 @@ namespace CauchyProblem.Problems
 				decimal sum2 = 0;
 
 				var dod1 = (-destiny[j]) / (2M * Normal.GetModul(new[]
-				                            {
-					                            Parametrization_ND.X01d(t[j]),
-					                            Parametrization_ND.X02d(t[j])
-				                            }));
+																	{
+																		Parametrization_ND.X01d(t[j]),
+																		Parametrization_ND.X02d(t[j])
+																	}));
 				                            //Normal.GetModul(t[j], Parametrization_ND.X01d, Parametrization_ND.X02d));
 				for (var k = 0; k < 2 * Parameters.M; k++)
 				{
@@ -146,8 +167,8 @@ namespace CauchyProblem.Problems
 					sum2 += (destiny[k + 2 * Parameters.M] * Kernels_DN.A2(t[j], t[k]));
 				}
 
-				res[j] = dod1 + (sum1 + sum2) / (2M * Parameters.M);
-				//res[j] =  (sum1 + sum2) / (2M * Parameters.M);
+				//res[j] = dod1 + (sum1 + sum2) / (2M * Parameters.M);
+				res[j] =  (sum1 + sum2) / (2M * Parameters.M);
 			}
 
 			return res;
