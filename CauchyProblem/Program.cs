@@ -9,43 +9,31 @@ namespace CauchyProblem
 {
 	internal class Program
 	{
-		private static readonly bool UseNoisy = false;
+		private static readonly bool UseNoisy = true;
         [STAThread]
         public static void Main(string[] args)
 		{
 			Alter alt = new Alter();
 			var t = alt.Procces(UseNoisy);
 			
-			Dirihle_Neymana problem = new Dirihle_Neymana(GetF1_0(),GetH_1());
-			//Neymana_Dirihle problem = new Neymana_Dirihle(GetH_0(),GetF1_1());
-
-			/*var resNabl = new decimal[2 * Parameters.M];
-			var resExact = new decimal[2 * Parameters.M];
-			for (int i = 0; i < resNabl.Length; i++)
-			{
-				var t = i * (decimal) Math.PI / Parameters.M;
-				var points = GetPoint(t);
-				resNabl[i] = problem.CalculateU(new []{points[0], points[1]});
-				resExact[i] = GetF(points[0], points[1]);
-			}*/
-			
-			//var resNabl = problem.CalculatePochidnaG0();
-			var resNabl = t.Item1;
-			var resExact = GetF1_0();
+			var errorU = t.Item1;
+			var errorDU = t.Item2;
 
 			
             Form1 form = new Form1();
-            form.Draw1(resNabl,GetRozbitta());
-            form.Draw2(resExact,GetRozbitta());
+
+            var index =  Enumerable.Range(1, 50).Select(x=>(decimal)x).ToArray();
+			form.Draw1(errorU.ToList().GetRange(1,errorU.Length-2).ToArray(),index);
+            form.Draw2(errorDU.ToList().GetRange(1,errorU.Length-2).ToArray(),index);
             form.Show();
 
-            Console.WriteLine(Error(resExact,resNabl));
+            //Console.WriteLine(Error(resExact,resNabl));
                 
             Application.EnableVisualStyles();
             Application.Run(form);
 		}
 
-        private static decimal Error(decimal[] ex, decimal[] toch)
+        private static decimal[] Error(decimal[] ex, decimal[] toch)
         {
 	        var res = new decimal[2*Parameters.M];
 
@@ -54,7 +42,7 @@ namespace CauchyProblem
 		        res[i] = Math.Abs(ex[i] - toch[i]);
 	        }
 
-	        return res.Max();
+	        return res;
         }
         
 		private static decimal[] GetH_0()

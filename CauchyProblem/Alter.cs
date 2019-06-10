@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using CauchyProblem.Problems;
 using CauchyProblem.Problems.Parametrization;
 
@@ -20,8 +22,11 @@ namespace CauchyProblem
 			
 			var U_ND = new decimal[2*Parameters.M];
 			var pochidna_DN = new decimal[2*Parameters.M];
+
+			var errorU = new List<decimal>();
+			var errorDU = new List<decimal>();
 			
-			while (k!=2)
+			while (k!=50)
 			{
 				ND = new Neymana_Dirihle(res1,res2);
 				
@@ -35,9 +40,40 @@ namespace CauchyProblem
 				pochidna_DN = DN.CalculatePochidnaG0();
 				res2 = GetF1_G1(useNoisy);
 				k++;
+				
+				
+				errorU.Add(ErrorMax(GetF1_0(),U_ND));
+				errorDU.Add(ErrorMax(GetH_0(),pochidna_DN));
 			}
 			
-			return (U_ND,pochidna_DN);
+			
+			return (errorU.ToArray(),errorDU.ToArray());
+		}
+
+		private decimal ErrorL(decimal[] ex, decimal[] nabl)
+		{
+			var error = 0.0M;
+			
+			for (int i = 0; i < 2*Parameters.M; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				error += ((decimal)Math.Pow((double)(ex[i] - nabl[i]), 2)*Normal.GetModul(new []{Parametrization_ND.X01d(t),Parametrization_ND.X02d(t)}));
+			}
+
+			return (decimal)Math.Sqrt((double)(error/(2M*Parameters.M)));
+		}
+		
+		private decimal ErrorMax(decimal[] ex, decimal[] nabl)
+		{
+			var error = new decimal[2*Parameters.M];
+			
+			for (int i = 0; i < 2*Parameters.M; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				error[i] = Math.Abs(ex[i] - nabl[i]);
+			}
+
+			return error.Max();
 		}
 		
 		private decimal[] GetF1_G1(bool useNoisy)
@@ -94,6 +130,43 @@ namespace CauchyProblem
 				{
 					Parametrization_ND.X11d(t),
 					Parametrization_ND.X12d(t)
+				});
+
+				res[i] = dod1 + dod2;
+			}
+
+			return res;
+		}
+		
+		private static decimal[] GetF1_0()
+		{
+			var res = new decimal[2 * Parameters.M];
+			
+			for (int i = 0; i < res.Length; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				res[i] = (decimal)(Math.Pow((double)Parametrization_ND.X01(t),2)-Math.Pow((double)Parametrization_ND.X02(t),2));
+			}
+			
+			return res;
+		}
+		
+		private static decimal[] GetH_0()
+		{
+			var res = new decimal[2 * Parameters.M];
+			for (int i = 0; i < res.Length; i++)
+			{
+				var t = (decimal)((decimal)i * (decimal)Math.PI) / (decimal)Parameters.M;
+				var dod1 = 2M * Parametrization_ND.X01(t) * Parametrization_ND.X02d(t) / Normal.GetModul(new[]
+				{
+					Parametrization_ND.X01d(t),
+					Parametrization_ND.X02d(t)
+				});
+				
+				var dod2 = 2M * Parametrization_ND.X02(t) * Parametrization_ND.X01d(t) / Normal.GetModul(new[]
+				{
+					Parametrization_ND.X01d(t),
+					Parametrization_ND.X02d(t)
 				});
 
 				res[i] = dod1 + dod2;

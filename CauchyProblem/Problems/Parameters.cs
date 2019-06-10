@@ -2,6 +2,6 @@ namespace CauchyProblem.Problems
 {
 	public class Parameters
 	{
-		public static int M = 16;
+		public static int M = 32;
 	}
 }
